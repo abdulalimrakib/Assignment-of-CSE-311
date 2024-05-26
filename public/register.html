@@ -10,7 +10,7 @@
 
 <body>
   <div class="container">
-    <form id="registerForm" style="
+    <form id="registerForm" enctype="multipart/form-data" style="
           width: 400px;
           background-color: #fff;
           color: #000;
@@ -82,7 +82,9 @@
 
       <div style="display: flex; align-items: center;">
         <p>Image:</p>
-        <input type="file" name="file" required " />
+        <input type="file" name="file" required style="
+            margin-left: 10px;
+          " />
       </div>
 
       <button type="submit" style="
@@ -112,19 +114,24 @@
       .addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const response = await fetch("http://localhost:3000/api/register", {
-          method: "POST",
-          body:formData
-          // headers: { "Content-Type": "application/json" },
-        });
-        // console.log(body);
-        const result = await response.json();
-        console.log(result);
-        if (result.message === "User registered") {
-          alert("Registration successful");
-          window.location.href = "./login.html";
-        } else {
-          alert("Error: " + result.message);
+        try {
+          const response = await fetch("http://localhost:3000/api/register", {
+            method: "POST",
+            body: formData
+          });
+          const result = await response?.json();
+          if (result?.message === "User registered") {
+            // alert("Registration successful")
+            // window.location.href ="./login.html"
+            alert("Registration successful");
+            window.location.href = "../public/login.html";
+            console.log(result.message);
+          } else {
+            alert("Error: " + result.message);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred during registration.");
         }
       });
   </script>

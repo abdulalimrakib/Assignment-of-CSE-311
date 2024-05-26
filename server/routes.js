@@ -3,16 +3,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('./bd');
 const { authenticateToken } = require('./middleware');
-// const upload = require('./multer');
-const multer  = require('multer')
+const upload = require('./multer');
+// const multer  = require('multer')
 
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
+// const upload = multer({ dest: 'uploads/' });
 
 // Register endpoint
 router.post('/api/register', upload.single("file"), (req, res) => {
-    console.log(req.file);
     const { firstName, lastName, gender, dob, email, password } = req.body;
     const profileImage = req?.file ? `../uploads/${req.file.filename}` : '../public/img/images.jpg';
 
