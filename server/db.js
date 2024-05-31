@@ -2,6 +2,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 const mysql = require("mysql");
 console.log(process.env.host);
+console.log(process.env.user);
+console.log(process.env.password);
+console.log(process.env.database);
 
 const db = mysql.createConnection({
   host: process.env.host,
