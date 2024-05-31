@@ -85,7 +85,7 @@
         <a href="#">Forgot Password?</a>
         <div style="display: flex; gap: 5px; justify-content: center">
           <p style="margin: 0">Do you have an account?</p>
-          <a href="./register.html">Register</a>
+          <a href="/register">Register</a>
         </div>
       </div>
       </form>
@@ -97,7 +97,7 @@
         .addEventListener("submit", async (e) => {
           e.preventDefault();
           const formData = new FormData(e.target);
-          const response = await fetch("http://localhost:3000/api/login", {
+          const response = await fetch("/api/login", {
             method: "POST",
             body: JSON.stringify(Object.fromEntries(formData)),
             headers: { "Content-Type": "application/json" },
@@ -105,7 +105,7 @@
           const result = await response.json();
           if (result.token) {
             localStorage.setItem("token", result.token);
-            window.location.href = "profile.html";
+            window.location.href = "/profile";
           } else {
             alert("Error: " + result.message);
           }
