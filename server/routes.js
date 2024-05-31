@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const db = require("./db");
 const { authenticateToken } = require("./middleware");
 const upload = require("./multer");
+const axios = require("axios");
+const FormData = require("form-data");
 
 const router = express.Router();
 
@@ -19,11 +21,29 @@ router.get("/profile", (req, res) => {
 });
 
 // Register endpoint
-router.post("/api/register", upload.single("file"), (req, res) => {
+router.post("/api/register", upload.single("file"), async (req, res) => {
   const { firstName, lastName, gender, dob, email, password } = req.body;
-  const profileImage = req?.file
-    ? `../uploads/${req.file.filename}`
-    : "../public/img/images.jpg";
+
+
+  const file = req.file;
+  if (!file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
+  // Create a FormData object to send the image in base64 format
+  const formData = new FormData();
+  formData.append("image", file.buffer.toString("base64"));
+
+  // Send the image to ImgBB
+  const response = await axios.post(
+    `https://api.imgbb.com/1/upload?key=${process.env.imgbbApi_key}`,
+    formData,
+    {
+      headers: formData.getHeaders(),
+    }
+  );
+
+  const profileImage = response.data.data.url;
 
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) return res.status(500).json({ message: "Error hashing password" });

@@ -115,7 +115,7 @@
             document.querySelector('[name="gender"]').value = user.gender;
             document.querySelector('[name="dob"]').value = user.dob;
             document.querySelector('[name="email"]').value = user.email;
-            document.getElementById('image').src = `../uploads/${user.profileImage}`;
+            document.getElementById('image').src = `${user.profileImage}`;
 
             // Edit button
             document.getElementById("editButton").addEventListener("click", () => {
