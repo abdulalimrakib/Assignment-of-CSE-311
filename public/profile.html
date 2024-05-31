@@ -96,12 +96,12 @@
             const token = localStorage.getItem("token");
             if (!token) {
                 alert("Not authenticated");
-                window.location.href = "login.html";
+                window.location.href = "/";
                 return;
             }
 
             // Fetch profile data
-            const response = await fetch("http://localhost:3000/api/profile", {
+            const response = await fetch("/api/profile", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const user = await response.json();
@@ -133,7 +133,7 @@
                     e.preventDefault();
                     const formData = new FormData(e.target);
                     const updateResponse = await fetch(
-                        "http://localhost:3000/api/profile",
+                        "/api/profile",
                         {
                             method: "PUT",
                             body: JSON.stringify(Object.fromEntries(formData)),
@@ -162,7 +162,7 @@
                 .addEventListener("click", async () => {
                     if (confirm("Are you sure you want to delete your account?")) {
                         const deleteResponse = await fetch(
-                            "http://localhost:3000/api/profile",
+                            "/api/profile",
                             {
                                 method: "DELETE",
                                 headers: { Authorization: `Bearer ${token}` },
@@ -172,7 +172,7 @@
                         if (deleteResult.message === "Account deleted") {
                             alert("Account deleted");
                             localStorage.removeItem("token");
-                            window.location.href = "register.html";
+                            window.location.href = "/register";
                         } else {
                             alert("Error: " + deleteResult.message);
                         }
@@ -184,7 +184,7 @@
                 .getElementById("logoutButton")
                 .addEventListener("click", () => {
                     localStorage.removeItem("token");
-                    window.location.href = "login.html";
+                    window.location.href = "/";
                 });
         });
     </script>

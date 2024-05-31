@@ -99,7 +99,7 @@
       </button>
       <div style="display: flex; gap: 5px; justify-content: center">
         <p style="margin: 0">Already have an account?</p>
-        <a href="./login.html">Login</a>
+        <a href="/">Login</a>
       </div>
   </div>
 
@@ -113,7 +113,7 @@
         e.preventDefault();
         const formData = new FormData(e.target);
         try {
-          const response = await fetch("http://localhost:3000/api/register", {
+          const response = await fetch("/api/register", {
             method: "POST",
             body: formData
           });
@@ -122,7 +122,7 @@
             // alert("Registration successful")
             // window.location.href ="./login.html"
             alert("Registration successful");
-            window.location.href = "../public/login.html";
+            window.location.href = "/";
             console.log(result.message);
           } else {
             alert("Error: " + result.message);
