@@ -103,15 +103,15 @@ router.put(
   upload.single("file"),
   (req, res) => {
     const { firstName, lastName, gender, dob, email } = req.body;
-    const profileImage = req.file
-      ? `/uploads/${req.file.filename}`
-      : req.body.profileImage;
+    // const profileImage = req.file
+    //   ? `${req.file.filename}`
+    //   : req.body.profileImage;
 
     const sql =
-      "UPDATE users SET firstName = ?, lastName = ?, gender = ?, dob = ?, email = ?, profileImage = ? WHERE id = ?";
+      "UPDATE users SET firstName = ?, lastName = ?, gender = ?, dob = ?, email = ? WHERE id = ?";
     db.query(
       sql,
-      [firstName, lastName, gender, dob, email, profileImage, req.user.id],
+      [firstName, lastName, gender, dob, email, req.user.id],
       (err, results) => {
         if (err) return res.status(500).json({ message: "Database error" });
         res.json({ message: "Profile updated" });
